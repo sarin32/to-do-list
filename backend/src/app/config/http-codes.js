@@ -1,4 +1,4 @@
-const HttpStatusCode = {
+export const HttpStatusCode = {
 	CONTINUE: 100,
 	SWITCHING_PROTOCOLS: 101,
 	PROCESSING: 102,
@@ -64,5 +64,4 @@ const HttpStatusCode = {
 	NETWORK_AUTHENTICATION_REQUIRED: 511
   };
   
-  export default HttpStatusCode;
   
