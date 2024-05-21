@@ -1,4 +1,4 @@
-import HttpStatusCode from '../config/index.js';
+import { HttpStatusCode } from '../config/index.js';
 
 export class BaseError extends Error {
   constructor({ statusCode, message, isToBeReported, errorCode }) {
