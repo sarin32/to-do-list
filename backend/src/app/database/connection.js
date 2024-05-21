@@ -5,15 +5,19 @@ let client;
 
 export const startConnection = async () => {
   if (!client) {
-    client = new MongoClient(DATABASE_SETTINGS.URL, { useNewUrlParser: true, useUnifiedTopology: true });
+    client = new MongoClient(DATABASE_SETTINGS.URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     await client.connect();
   }
 };
 
-export const getCollection = (collectionName) => {
+export const getCollection = collectionName => {
   if (!client) {
-    throw new Error("Client is not connected. Please call startConnection first.");
+    throw new Error(
+      'Client is not connected. Please call startConnection first.'
+    );
   }
   return client.db(DATABASE_TO_DO_LIST).collection(collectionName);
 };
-

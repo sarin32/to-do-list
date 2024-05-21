@@ -1,6 +1,5 @@
 // environment level constants
 
-import { Binary } from 'mongodb';
 import dotEnv from 'dotenv';
 
 dotEnv.config();
