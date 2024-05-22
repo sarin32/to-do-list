@@ -1,8 +1,8 @@
-import { compile } from 'handlebars';
+import handlebars from 'handlebars';
 import { promises as fs } from 'fs';
 
 export async function generateTemplate(templateName, data) {
   const templateContent = await fs.readFile(`./src/assets/templates/${templateName}.html`, 'utf-8');
-  const template = compile(templateContent);
+  const template = handlebars.compile(templateContent);
   return template(data);
 }
