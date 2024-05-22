@@ -1,6 +1,9 @@
 import { HttpStatusCode } from '../config/index.js';
 
 export class BaseError extends Error {
+  statusCode;
+  errorCode;
+  isToBeReported
   constructor({ statusCode, message, isToBeReported, errorCode }) {
     super(message);
     this.statusCode = statusCode;
