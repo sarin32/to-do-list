@@ -4,12 +4,9 @@ import { HttpStatusCode } from '../../config/index.js';
 /**
  * Error handling middleware for Express 
  */
-export async function errorMiddleware(req, res, next) {
-  console.error(err);
-
+export async function errorMiddleware(err, req, res, next) {
   try {
-    await next()
-  } catch (error) {
+    console.error(err)
     const body = {};
     if (err instanceof BaseError) {
       res.status(err.statusCode);
@@ -22,5 +19,7 @@ export async function errorMiddleware(req, res, next) {
       body.message = 'Something went wrong';
     }
     res.json(body);
+  } catch (error) {
+    console.error('Error in error middleware :', error);
   }
 }
