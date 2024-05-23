@@ -82,6 +82,6 @@ export async function sendEmailVerificationEmail({ otp, emailId }) {
     to: emailId,
     subject: 'OTP for your email verification',
     html: body,
-    senderName: 'TO-DO-LIST ADMIN',
+    senderName: 'ClearList ADMIN',
   });
 }
