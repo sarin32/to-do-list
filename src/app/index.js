@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import { PORT } from './config/index.js';
 import { connection } from './database/index.js';
-import { errorMiddleware } from './api/index.js';
+import { errorMiddleware, router } from './api/index.js';
 
 const initExpress = () => {
 
@@ -19,11 +19,11 @@ const initExpress = () => {
   // Use body-parser middleware
   app.use(bodyParser.json());
 
+  // Attach router
+  app.use(router);
+  
   // Use custom error middleware
   app.use(errorMiddleware);
-
-  // Attach router
-  // app.use(router);
 
   return app
 }
