@@ -1,4 +1,4 @@
-export * from './email.util.js'
+export * as emailUtil from './email.util.js'
 export * from './password.util.js'
 export * from './string.util.js'
 export * from './template.util.js'
