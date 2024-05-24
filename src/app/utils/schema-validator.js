@@ -35,8 +35,12 @@ export function requiredNumberSchema() {
   return Joi.number().required();
 }
 
-export function numberSchema() {
-  return Joi.number();
+export function numberSchema({ min, max, required = false } = {}) {
+  let schema = Joi.number()
+  if (required) schema = schema.required();
+  if (min != undefined) schema = schema.min(min)
+  if (max != undefined) schema = schema.max(max)
+  return schema
 }
 
 export function booleanSchema(required = true) {
@@ -65,6 +69,12 @@ export function arraySchema({
   required = true,
 }) {
   let schema = Joi.array().items(object);
+  if (required) schema = schema.required();
+  return schema;
+}
+
+export function fixedStringSchema({ values, required = true }) {
+  let schema = Joi.string().valid(...values);
   if (required) schema = schema.required();
   return schema;
 }
