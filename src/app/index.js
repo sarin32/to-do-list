@@ -13,7 +13,7 @@ const initExpress = () => {
 
   // Enable CORS with specific methods
   app.use(cors({
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   }));
 
   // Use body-parser middleware
