@@ -27,7 +27,7 @@ const deleteTaskSchema = objectSchema({
 const updateTaskSchema = objectSchema({
   object: {
     taskId: objectIdSchema(),
-    title: stringSchema({ min: 3, max: 20, required: false }),
+    title: stringSchema({ min: 3, max: 300, required: false }),
     description: stringSchema({ required: false, max: 100 }),
     isCompleted: booleanSchema(false)
   }
@@ -66,7 +66,6 @@ export async function deleteTask(req, res, next) {
     // Validate the request parameters
     const { error, value } = validateObject(deleteTaskSchema, { ...req.params });
 
-    console.log(value)
     if (error) throw new BadRequestError(error.message);
 
 

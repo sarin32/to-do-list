@@ -28,14 +28,16 @@ export async function isTaskExists({ taskId, userId }) {
 
 export async function updateTask({ taskId, title, description, isCompleted }) {
   const setData = {}
+  const unSetData = {}
   if (title) setData.title = title
   if (description) setData.description = description
   if (isCompleted != undefined) setData.isCompleted = isCompleted
   if (isCompleted) setData.completedAt = new Date()
+  if (isCompleted === false) unSetData.completedAt = ""
 
   const response = await tasksModel.updateOne(
     { _id: taskId },
-    { $set: setData }
+    { $set: setData, $unset: unSetData }
   );
 
   if (!response.acknowledged || response.modifiedCount !== 1) {
@@ -50,7 +52,7 @@ export async function getAllTaskList({ userId, skip = 0, limit = 0, descSortByCr
 
   return await getTaskList(
     { userId },
-    { title: 1, description: 1, isCompleted: 1, },
+    { title: 1, description: 1, isCompleted: 1, createdAt: 1, completedAt: 1 },
     skip,
     limit,
     sort
@@ -64,7 +66,7 @@ export async function getPendingTaskList({ userId, skip = 0, limit = 0, descSort
 
   return await getTaskList(
     { userId, isCompleted: false },
-    { title: 1, description: 1, isCompleted: 1, },
+    { title: 1, description: 1, isCompleted: 1, createdAt: 1 },
     skip,
     limit,
     sort
@@ -76,13 +78,14 @@ export async function getCompletedTaskList({ userId, skip = 0, limit = 0, descSo
 
   if (descSortByCompletedAt) sort.completedAt = -1
 
-  return await getTaskList(
+  const tasks = await getTaskList(
     { userId, isCompleted: true },
-    { title: 1, description: 1, iscompleted: 1, completedAt: 1 },
+    { title: 1, description: 1, isCompleted: 1, completedAt: 1, createdAt: 1 },
     skip,
     limit,
     sort
   )
+  return tasks
 }
 
 async function getTaskList(query, projection = {}, skip, limit, sort) {
@@ -101,7 +104,6 @@ async function getTaskList(query, projection = {}, skip, limit, sort) {
 
 export async function deleteTask({ taskId }) {
   const response = await tasksModel.deleteOne({ _id: taskId })
-  
   if (!response.acknowledged || response.deletedCount !== 1) {
     throw new Error('Failed to delete task data');
   }
